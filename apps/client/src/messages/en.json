@@ -1,5 +1,3 @@
 {
-  "Index": {
-    "title": "You have {count, plural, =0 {no followers yet} =1 {one follower} other {# followers}}."
-  }
+  "test": "{count, plural, zero {# users} one {# user} two {# users} other {# users}}"
 }

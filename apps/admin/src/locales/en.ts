@@ -1,7 +1,6 @@
 export default {
-  hello: 'Hello',
-  'test#zero': '{count} юзеров',
-  'test#one': '{count} юзер',
-  'test#two': '{count} юзера',
-  'test#other': '{count} юзеров',
+  'test#zero': '{count} users',
+  'test#one': '{count} user',
+  'test#two': '{count} users',
+  'test#other': '{count} users',
 } as const;

@@ -7,7 +7,9 @@ export default function Home({ params: { locale } }: { params: { locale: string 
   return (
     <div>
       <p>Admin</p>
-      Mode: <ThemeToggle />
+      <div>
+        Mode: <ThemeToggle />
+      </div>
       {/* <ServerComponent /> */}
       <I18nProviderClient locale={locale}>
         <ClientComponent />
