@@ -36,8 +36,5 @@
   "packageManager": "npm@9.8.1",
   "engines": {
     "node": ">=v18.18.2"
-  },
-  "dependencies": {
-    "next-international": "^1.1.3"
   }
 }

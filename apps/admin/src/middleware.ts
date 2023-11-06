@@ -1,11 +1,11 @@
-// middleware.ts
 import type { NextRequest } from 'next/server';
 
 import { createI18nMiddleware } from 'next-international/middleware';
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ['en'],
+  locales: ['en', 'fr'],
   defaultLocale: 'en',
+  urlMappingStrategy: 'rewrite',
 });
 
 export function middleware(request: NextRequest) {
@@ -13,5 +13,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
