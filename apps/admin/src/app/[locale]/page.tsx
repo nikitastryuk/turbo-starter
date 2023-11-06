@@ -1,3 +1,4 @@
+import { ServerComponent } from '~/components/ServeComponent';
 import { ThemeToggle } from '~/components/ThemeToggle';
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
       <p>Admin</p>
       <div>
         Mode: <ThemeToggle />
+        <ServerComponent />
       </div>
     </div>
   );
