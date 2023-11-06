@@ -1,0 +1,33 @@
+{
+  "name": "@llmaid/system",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "files": [
+    "./src/index.ts",
+    "./globals.css",
+    "./tailwind.config.ts"
+  ],
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "lint": "eslint . --fix",
+    "ncu": "ncu -u",
+    "typecheck": "tsc --pretty --noEmit"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@llmaid/eslint-config/base",
+      "@llmaid/eslint-config/nextjs"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lucide-react": "^0.292.0",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "llmaid",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "configs/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "clean": "turbo clean && git clean -xdf node_modules .turbo",
+    "dev:admin": "turbo dev --filter=admin",
+    "dev:client": "turbo dev --filter=client",
+    "dev:system": "turbo dev --filter=system",
+    "format": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
+    "postinstall": "npx simple-git-hooks",
+    "lint": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
+    "ncu": "turbo ncu && ncu -u",
+    "typecheck": "turbo typecheck"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "prettier": "@llmaid/prettier-config",
+  "devDependencies": {
+    "@llmaid/eslint-config": "*",
+    "@llmaid/prettier-config": "*",
+    "@llmaid/tsconfig": "*",
+    "lint-staged": "^15.0.2",
+    "npm-check-updates": "^16.14.6",
+    "simple-git-hooks": "^2.9.0",
+    "turbo": "^1.10.16"
+  },
+  "packageManager": "npm@9.8.1",
+  "engines": {
+    "node": ">=v18.18.2"
+  }
+}
