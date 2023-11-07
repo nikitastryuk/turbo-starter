@@ -3,7 +3,7 @@ import './src/env.mjs';
 
 import withNextIntlFactory from 'next-intl/plugin';
 
-export const withNextIntl = withNextIntlFactory('./src/i18n.ts');
+export const withNextIntl = withNextIntlFactory('./src/i18n/i18n.ts');
 
 export default withNextIntl({
   reactStrictMode: true,

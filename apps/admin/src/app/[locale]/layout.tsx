@@ -33,12 +33,12 @@ export default async function RootLayout({
   let messages: Messages;
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    messages = (await import(`../../messages/${locale}.json`)).default as Messages;
+    messages = (await import(`../../i18n/locales/${locale}.json`)).default as Messages;
   } catch (error) {
     console.error(error);
     notFound();
   }
-  console.log(locale);
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
