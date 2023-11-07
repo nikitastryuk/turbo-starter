@@ -1,3 +1,5 @@
+import { ClientComponent } from '~/components/ClientComponent';
+// import { ServerComponent } from '~/components/ServerComponent';
 import { ThemeToggle } from '~/components/ThemeToggle';
 
 export default function Home() {
@@ -7,6 +9,8 @@ export default function Home() {
       <div>
         Mode: <ThemeToggle />
       </div>
+      {/* <ServerComponent /> */}
+      <ClientComponent />
     </div>
   );
 }

@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "nvm use && npm run dev",
+      "cwd": "${workspaceFolder}/apps/admin/",
+      "skipFiles": ["<node_internals>/**"],
+      "nodeVersionHint": 18
+    }
+  ]
+}

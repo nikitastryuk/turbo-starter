@@ -1,0 +1,3 @@
+{
+  "test": "{count, plural, one {# user} other {# users}}"
+}
