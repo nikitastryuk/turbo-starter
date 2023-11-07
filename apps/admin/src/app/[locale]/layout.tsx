@@ -10,10 +10,6 @@ import { NextIntlClientProvider } from 'next-intl';
 
 import { Providers } from '~/Providers';
 
-export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'uk' }];
-}
-
 const inter = Inter({ subsets: ['latin'] });
 
 type Messages = Record<string, string>;
