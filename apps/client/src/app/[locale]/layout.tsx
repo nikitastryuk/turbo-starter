@@ -11,7 +11,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { Providers } from '~/Providers';
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'ua' }];
+  return [{ locale: 'en' }, { locale: 'uk' }];
 }
 
 const inter = Inter({ subsets: ['latin'] });

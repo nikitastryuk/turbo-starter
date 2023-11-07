@@ -1,3 +1,0 @@
-{
-  "test": "{count, plural, zero {# юзеров} one {# юзер} two {# юзера} other {# юзеров}}"
-}
