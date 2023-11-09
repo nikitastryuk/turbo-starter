@@ -38,19 +38,38 @@ configs
       └─ Shared tsconfig you can extend from
 ```
 
-### Initial setup
+### Initial Setup
 
-```bash
-1. Create `.env` (root folder) and fill out files with all environment variables. Use `.env.example` as reference.
+1. **Create Environment File:**
+   - Create a `.env` file in the root folder and fill it with the required environment variables. Use `.env.example` as a reference.
 
-2. Install the dependencies (**_FROM ROOT FOLDER_**):
+2. **Install Dependencies:**
+   - Install project dependencies from the root folder using the following command:
 
-npm install
+     ```bash
+     npm install
+     ```
 
-3. Run dev server for expected app / package. (**_FROM ROOT FOLDER_**):
+3. **Run Development Server:**
+   - To run the development server for a specific app or package, use the following command from the root folder:
 
-npm run dev:admin
-```
+     ```bash
+     npm run dev:admin
+     ```
+
+### Most common project scripts
+
+| Script           | Description                                                               |
+|------------------|---------------------------------------------------------------------------|
+| `build`          | Run the build command for each workspace.                                 |
+| `clean`          | Clean all workspaces, removing `node_modules`, `.next`, `.turbo` folders. |
+| `dev:admin`      | Run the development server for the admin project.                         |
+| `dev:client`     | Run the development server for the client project.                        |
+| `dev:system`     | Run the development server for the system project.                        |
+| `format`         | Format workspaces with Prettier, writing changes and caching results.     |
+| `lint`           | Lint workspaces with ESLint, fixing issues and caching results.           |
+| `ncu`            | Update workspaces dependencies using npm-check-updates.                   |
+| `typecheck`      | Run tcs for each workspaces.                                              |
 
 ### Remote Caching
 
