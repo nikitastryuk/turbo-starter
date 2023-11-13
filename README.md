@@ -9,6 +9,7 @@ This turborepo uses [npm](https://www.npmjs.com/) as a package manager.
 - [Next-intl](https://next-intl-docs.vercel.app)
 - [Tailwind](https://tailwindcss.com)
 - [Shadcn UI](https://ui.shadcn.com)
+- [React-hook-form](https://react-hook-form.com)
 - [CVA](https://cva.style/docs)
 - [Radix](https://www.radix-ui.com)
 - [Zod](https://zod.dev/?id=installation)
