@@ -1,0 +1,30 @@
+{
+  "name": "@llmaid/supabase",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "files": [
+    "./src/index.ts"
+  ],
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "lint": "eslint . --fix",
+    "ncu": "ncu -u",
+    "typecheck": "tsc --pretty --noEmit"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@llmaid/eslint-config/base",
+      "@llmaid/eslint-config/nextjs"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.0.10",
+    "@supabase/supabase-js": "^2.38.4"
+  },
+  "devDependencies": {
+    "supabase": "^1.112.2"
+  }
+}

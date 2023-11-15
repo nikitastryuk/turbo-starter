@@ -13,6 +13,7 @@ import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormGoogleButton } from '../../_components/AuthFormGoogleButton';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
+import { signInWithEmailAndPassword } from '../../authActions';
 
 const schema = z.object({
   email: z.string().min(2, {
@@ -34,8 +35,8 @@ export const SignInForm = () => {
     },
   });
 
-  const handleSubmit = (data: SignInFormValues) => {
-    console.log(data);
+  const handleSubmit = async (data: SignInFormValues) => {
+    await signInWithEmailAndPassword(data);
   };
 
   return (

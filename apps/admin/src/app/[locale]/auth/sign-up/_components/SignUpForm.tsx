@@ -12,6 +12,7 @@ import { AuthFormGoogleButton } from '../../_components/AuthFormGoogleButton';
 import { AuthFormPasswordConfirmationField } from '../../_components/AuthFormPasswordConfirmationField';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
+import { signUpWithEmailAndPassword } from '../../authActions';
 
 const schema = z
   .object({
@@ -38,8 +39,12 @@ export const SignUpForm = () => {
     },
   });
 
-  const handleSubmit = (data: SignUpFormValues) => {
-    console.log(data);
+  const handleSubmit = async (data: SignUpFormValues) => {
+    try {
+      await signUpWithEmailAndPassword(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
