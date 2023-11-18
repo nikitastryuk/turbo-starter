@@ -1,11 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+
+import configuration from '~/configuration';
 
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormPasswordConfirmationField } from '../../_components/AuthFormPasswordConfirmationField';
@@ -13,24 +16,24 @@ import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { changePassword } from '../../authActions';
 
-const schema = z
-  .object({
-    password: z.string().min(3, {
-      message: 'Password must be at least 3 characters.',
-    }),
-    passwordConfirmation: z.string(),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: 'Passwords do not match.',
-    path: ['passwordConfirmation'],
-  });
-
-type ChangePasswordFormValues = z.infer<typeof schema>;
-
 export const ChangePasswordForm = () => {
+  const t = useTranslations('auth');
+
   const { execute, result, status, reset } = useAction(changePassword);
 
-  const form = useForm<ChangePasswordFormValues>({
+  const schema = z
+    .object({
+      password: z.string().min(3, {
+        message: 'Password must be at least 3 characters.',
+      }),
+      passwordConfirmation: z.string(),
+    })
+    .refine((data) => data.password === data.passwordConfirmation, {
+      message: 'Passwords do not match.',
+      path: ['passwordConfirmation'],
+    });
+
+  const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       password: '',
@@ -38,14 +41,14 @@ export const ChangePasswordForm = () => {
     },
   });
 
-  const handleSubmit = (data: ChangePasswordFormValues) => {
+  const handleSubmit = (data: z.infer<typeof schema>) => {
     reset();
     execute(data);
   };
 
   return (
     <>
-      <AuthFormTitle>Change password</AuthFormTitle>
+      <AuthFormTitle>{t('change-password.title')}</AuthFormTitle>
       {result.serverError && (
         <Alert variant="destructive">
           <AlertDescription>{result.serverError}</AlertDescription>
@@ -53,9 +56,7 @@ export const ChangePasswordForm = () => {
       )}
       {result.data ? (
         <Alert variant="success">
-          <AlertDescription>
-            Your password has been updated, and you were automatically signed in.
-          </AlertDescription>
+          <AlertDescription>{t('change-password.success')}</AlertDescription>
         </Alert>
       ) : (
         <FormProvider {...form}>
@@ -63,12 +64,16 @@ export const ChangePasswordForm = () => {
             <AuthFormPasswordField />
             <AuthFormPasswordConfirmationField />
             <Button disabled={status === 'executing'} className="block w-full" type="submit">
-              Change password
+              {t('change-password.submit')}
             </Button>
           </form>
         </FormProvider>
       )}
-      <AuthFormFooter text="Go to" linkHref="/" linkText="Dashboard" />
+      <AuthFormFooter
+        text={t('change-password.footerText')}
+        linkHref={configuration.paths.home}
+        linkText={t('change-password.footerLinkText')}
+      />
     </>
   );
 };

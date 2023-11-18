@@ -4,6 +4,8 @@ import createIntlMiddleware from 'next-intl/middleware';
 
 import { createMiddlewareClient } from '@llmaid/supabase';
 
+import configuration from './configuration';
+
 const with18nRouting = createIntlMiddleware({
   // A list of all locales that are supported
   locales: ['en', 'uk'],
@@ -11,8 +13,9 @@ const with18nRouting = createIntlMiddleware({
   localePrefix: 'as-needed',
 });
 
+const { paths } = configuration;
 // List of paths that do not require authentication and will be redirected to home page if user is already authenticated
-const UNAUTHENTICATED_PATHS = ['/auth/sign-in', '/auth/sign-up', '/auth/reset-password'];
+const UNAUTHENTICATED_PATHS = [paths.signIn, paths.signUp, paths.resetPassword];
 
 const withAuth = async (request: NextRequest, response: NextResponse) => {
   const { supabase, response: enrichedResponse } = createMiddlewareClient(request, response);
@@ -30,18 +33,19 @@ const withAuth = async (request: NextRequest, response: NextResponse) => {
 
   // Redirect to home page if user is already authenticated
   if (session && isUnAuthenticatedPath) {
-    return NextResponse.redirect('http://localhost:3000/');
+    return NextResponse.redirect(request.nextUrl.origin + paths.home);
   }
 
   // Redirect to sign in page if user is not authenticated
-  if (!session && (!isUnAuthenticatedPath || pathname === '/auth/change-password')) {
-    return NextResponse.redirect('http://localhost:3000/auth/sign-in');
+  if (!session && (!isUnAuthenticatedPath || pathname === paths.changePassword)) {
+    return NextResponse.redirect(request.nextUrl.origin + paths.signIn);
   }
 
   return enrichedResponse;
 };
 
 export async function middleware(request: NextRequest) {
+  request.headers.append('x-url', request.nextUrl.pathname);
   const i18nRoutingResponse = with18nRouting(request);
   return await withAuth(request, i18nRoutingResponse);
 }

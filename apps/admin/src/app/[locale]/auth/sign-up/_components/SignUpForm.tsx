@@ -1,11 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+
+import configuration from '~/configuration';
 
 import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
@@ -15,25 +18,25 @@ import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { signUpWithEmailAndPassword } from '../../authActions';
 
-const schema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(3, {
-      message: 'Password must be at least 3 characters.',
-    }),
-    passwordConfirmation: z.string(),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: 'Passwords do not match.',
-    path: ['passwordConfirmation'],
-  });
-
-type SignUpFormValues = z.infer<typeof schema>;
-
 export const SignUpForm = () => {
+  const t = useTranslations('auth');
+
   const { execute, result, status, reset } = useAction(signUpWithEmailAndPassword);
 
-  const form = useForm<SignUpFormValues>({
+  const schema = z
+    .object({
+      email: z.string().email(),
+      password: z.string().min(6, {
+        message: t('shared.validation.passwordLength', { count: 6 }),
+      }),
+      passwordConfirmation: z.string(),
+    })
+    .refine((data) => data.password === data.passwordConfirmation, {
+      message: t('shared.validation.passwordNotMatch'),
+      path: ['passwordConfirmation'],
+    });
+
+  const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: '',
@@ -42,16 +45,16 @@ export const SignUpForm = () => {
     },
   });
 
-  const handleSubmit = (data: SignUpFormValues) => {
+  const handleSubmit = (data: z.infer<typeof schema>) => {
     reset();
     execute(data);
   };
 
   return (
     <>
-      <AuthFormTitle>Create an account</AuthFormTitle>
-      <AuthFormGoogleButton>Sign up with Google</AuthFormGoogleButton>
-      <p className="text-center text-xs text-gray-400">or continue with email and password</p>
+      <AuthFormTitle>{t('sing-up.title')}</AuthFormTitle>
+      <AuthFormGoogleButton>{t('sing-up.googleButton')}</AuthFormGoogleButton>
+      <p className="text-center text-xs text-gray-400">{t('shared.continueWithEmail')}</p>
       {result.serverError && (
         <Alert variant="destructive">
           <AlertDescription>{result.serverError}</AlertDescription>
@@ -63,11 +66,15 @@ export const SignUpForm = () => {
           <AuthFormPasswordField />
           <AuthFormPasswordConfirmationField />
           <Button disabled={status === 'executing'} className="block w-full" type="submit">
-            Sign up
+            {t('sing-up.submit')}
           </Button>
         </form>
       </FormProvider>
-      <AuthFormFooter text="Already have an account?" linkHref="/auth/sign-in" linkText="Sign in" />
+      <AuthFormFooter
+        text={t('sing-up.footerText')}
+        linkHref={configuration.paths.signIn}
+        linkText={t('sing-up.footerLinkText')}
+      />
     </>
   );
 };

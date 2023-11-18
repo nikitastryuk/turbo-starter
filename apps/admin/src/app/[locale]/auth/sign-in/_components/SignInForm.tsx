@@ -3,11 +3,14 @@
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+
+import configuration from '~/configuration';
 
 import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
@@ -16,21 +19,19 @@ import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { signInWithEmailAndPassword } from '../../authActions';
 
-const schema = z.object({
-  email: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  password: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-});
-
-type SignInFormValues = z.infer<typeof schema>;
-
 export const SignInForm = () => {
+  const t = useTranslations('auth');
+
   const { execute, result, status, reset } = useAction(signInWithEmailAndPassword);
 
-  const form = useForm<SignInFormValues>({
+  const schema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6, {
+      message: t('shared.validation.passwordLength', { count: 6 }),
+    }),
+  });
+
+  const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: '',
@@ -38,16 +39,16 @@ export const SignInForm = () => {
     },
   });
 
-  const handleSubmit = (data: SignInFormValues) => {
+  const handleSubmit = (data: z.infer<typeof schema>) => {
     reset();
     execute(data);
   };
 
   return (
     <>
-      <AuthFormTitle>Sign in to your account</AuthFormTitle>
-      <AuthFormGoogleButton>Sign in with Google</AuthFormGoogleButton>
-      <p className="text-center text-xs text-gray-400">or continue with email and password</p>
+      <AuthFormTitle>{t('sing-in.title')}</AuthFormTitle>
+      <AuthFormGoogleButton>{t('sing-in.googleButton')}</AuthFormGoogleButton>
+      <p className="text-center text-xs text-gray-400">{t('shared.continueWithEmail')}</p>
       {result.serverError && (
         <Alert variant="destructive">
           <AlertDescription>{result.serverError}</AlertDescription>
@@ -57,18 +58,18 @@ export const SignInForm = () => {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <AuthFormEmailField />
           <AuthFormPasswordField />
-          <Link href={'/auth/reset-password'} className="block text-sm hover:underline">
-            Forgot password?
+          <Link href={configuration.paths.resetPassword} className="block text-sm hover:underline">
+            {t('sing-in.forgotPassword')}
           </Link>
           <Button disabled={status === 'executing'} className="block w-full" type="submit">
-            Sign in
+            {t('sing-in.submit')}
           </Button>
         </form>
       </FormProvider>
       <AuthFormFooter
-        text="Do not have an account yet?"
-        linkHref="/auth/sign-up"
-        linkText="Sign up"
+        text={t('sing-in.footerText')}
+        linkHref={configuration.paths.signUp}
+        linkText={t('sing-in.footerLinkText')}
       />
     </>
   );

@@ -1,5 +1,6 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { getTranslations } from 'next-intl/server';
@@ -7,6 +8,10 @@ import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
 import { createServerClient } from '@llmaid/supabase';
+
+import configuration from '~/configuration';
+
+const { paths } = configuration;
 
 const action = createSafeActionClient({
   handleReturnedServerError(e) {
@@ -24,12 +29,13 @@ export const signUpWithEmailAndPassword = action(
     password: z.string(),
   }),
   async ({ email, password }) => {
+    const origin = headers().get('origin');
     const supabase = createServerClient();
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
-        emailRedirectTo: 'http://localhost:3000/auth/callback',
+        emailRedirectTo: `${origin}${paths.authCallback}`,
       },
     });
     if (error) {
@@ -39,9 +45,7 @@ export const signUpWithEmailAndPassword = action(
     const identities = data?.user?.identities ?? [];
     if (identities.length === 0) {
       const t = await getTranslations();
-      // TODO: translate
-      // Email is already taken
-      throw new Error(t('test'));
+      throw new Error(t('auth.sing-in.errors.emailTaken'));
     }
   },
 );
@@ -52,6 +56,7 @@ export const signInWithEmailAndPassword = action(
     password: z.string(),
   }),
   async (data) => {
+    const origin = headers().get('origin');
     const supabase = createServerClient();
     const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
@@ -60,17 +65,18 @@ export const signInWithEmailAndPassword = action(
     if (error) {
       throw new Error(error.message);
     }
-    redirect('http://localhost:3000/');
+    redirect(`${origin}${paths.home}`);
   },
 );
 
 export const signOut = async () => {
+  const origin = headers().get('origin');
   const supabase = createServerClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
     throw new Error(error.message);
   }
-  redirect('http://localhost:3000/auth/sign-in');
+  redirect(`${origin}${paths.signIn}`);
 };
 
 export const resetPasswordForEmail = action(
@@ -78,9 +84,10 @@ export const resetPasswordForEmail = action(
     email: z.string().email(),
   }),
   async ({ email }) => {
+    const origin = headers().get('origin');
     const supabase = createServerClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:3000/auth/callback?next=http://localhost:3000/change-password',
+      redirectTo: `${origin}${paths.authCallback}?next=${origin}${paths.changePassword}`,
     });
     if (error) {
       throw new Error(error.message);

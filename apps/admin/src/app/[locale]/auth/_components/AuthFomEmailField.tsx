@@ -1,8 +1,10 @@
+import { useTranslations } from 'next-intl';
 import { useFormContext } from 'react-hook-form';
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from '@llmaid/system';
 
 export const AuthFormEmailField = () => {
+  const t = useTranslations('auth');
   const { control } = useFormContext();
 
   return (
@@ -11,7 +13,7 @@ export const AuthFormEmailField = () => {
       name="email"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Email Address</FormLabel>
+          <FormLabel>{t('shared.email')}</FormLabel>
           <FormControl>
             <Input {...field} type="email" required />
           </FormControl>
