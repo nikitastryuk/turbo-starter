@@ -3,10 +3,11 @@
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Button, FormProvider } from '@llmaid/system';
+import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
 
 import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
@@ -27,6 +28,8 @@ const schema = z.object({
 type SignInFormValues = z.infer<typeof schema>;
 
 export const SignInForm = () => {
+  const { execute, result, status, reset } = useAction(signInWithEmailAndPassword);
+
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -35,8 +38,9 @@ export const SignInForm = () => {
     },
   });
 
-  const handleSubmit = async (data: SignInFormValues) => {
-    await signInWithEmailAndPassword(data);
+  const handleSubmit = (data: SignInFormValues) => {
+    reset();
+    execute(data);
   };
 
   return (
@@ -44,6 +48,11 @@ export const SignInForm = () => {
       <AuthFormTitle>Sign in to your account</AuthFormTitle>
       <AuthFormGoogleButton>Sign in with Google</AuthFormGoogleButton>
       <p className="text-center text-xs text-gray-400">or continue with email and password</p>
+      {result.serverError && (
+        <Alert variant="destructive">
+          <AlertDescription>{result.serverError}</AlertDescription>
+        </Alert>
+      )}
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <AuthFormEmailField />
@@ -51,7 +60,7 @@ export const SignInForm = () => {
           <Link href={'/auth/reset-password'} className="block text-sm hover:underline">
             Forgot password?
           </Link>
-          <Button className="block w-full" type="submit">
+          <Button disabled={status === 'executing'} className="block w-full" type="submit">
             Sign in
           </Button>
         </form>

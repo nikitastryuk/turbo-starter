@@ -4,13 +4,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
 export const createMiddlewareClient = (request: NextRequest, response: NextResponse) => {
-  // Create an unmodified response
-  // let response = NextResponse.next({
-  //   request: {
-  //     headers: request.headers,
-  //   },
-  // });
-
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

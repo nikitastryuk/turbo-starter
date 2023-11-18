@@ -1,6 +1,10 @@
+import { Button } from '@llmaid/system';
+
 import { ClientComponent } from '~/components/ClientComponent';
-// import { ServerComponent } from '~/components/ServerComponent';
+import { ServerComponent } from '~/components/ServerComponent';
 import { ThemeToggle } from '~/components/ThemeToggle';
+
+import { signOut } from './auth/authActions';
 
 export default function Home() {
   return (
@@ -9,7 +13,11 @@ export default function Home() {
       <div>
         Mode: <ThemeToggle />
       </div>
-      {/* <ServerComponent /> */}
+      <form action={signOut}>
+        <Button type="submit">Sign out</Button>
+      </form>
+      -------------------
+      <ServerComponent />
       <ClientComponent />
     </div>
   );

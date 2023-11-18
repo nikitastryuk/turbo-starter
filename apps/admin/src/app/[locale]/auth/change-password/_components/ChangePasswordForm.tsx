@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -12,6 +11,7 @@ import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormPasswordConfirmationField } from '../../_components/AuthFormPasswordConfirmationField';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
+import { changePassword } from '../../authActions';
 
 const schema = z
   .object({
@@ -28,7 +28,7 @@ const schema = z
 type ChangePasswordFormValues = z.infer<typeof schema>;
 
 export const ChangePasswordForm = () => {
-  const [submitted, setSubmitted] = useState(false);
+  const { execute, result, status, reset } = useAction(changePassword);
 
   const form = useForm<ChangePasswordFormValues>({
     resolver: zodResolver(schema),
@@ -39,16 +39,22 @@ export const ChangePasswordForm = () => {
   });
 
   const handleSubmit = (data: ChangePasswordFormValues) => {
-    console.log(data);
+    reset();
+    execute(data);
   };
 
   return (
     <>
       <AuthFormTitle>Change password</AuthFormTitle>
-      {submitted ? (
+      {result.serverError && (
+        <Alert variant="destructive">
+          <AlertDescription>{result.serverError}</AlertDescription>
+        </Alert>
+      )}
+      {result.data ? (
         <Alert variant="success">
           <AlertDescription>
-            Your password has been changed. You can now sign in with your new password.
+            Your password has been updated, and you were automatically signed in.
           </AlertDescription>
         </Alert>
       ) : (
@@ -56,13 +62,13 @@ export const ChangePasswordForm = () => {
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <AuthFormPasswordField />
             <AuthFormPasswordConfirmationField />
-            <Button onClick={() => setSubmitted(true)} className="block w-full" type="submit">
+            <Button disabled={status === 'executing'} className="block w-full" type="submit">
               Change password
             </Button>
           </form>
         </FormProvider>
       )}
-      <AuthFormFooter text="Back to" linkHref="/auth/sign-in" linkText="Sign in" />
+      <AuthFormFooter text="Go to" linkHref="/" linkText="Dashboard" />
     </>
   );
 };
