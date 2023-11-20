@@ -107,3 +107,17 @@ export const changePassword = action(
     }
   },
 );
+
+// export const signInWithGoogle = async () => {
+//   const origin = headers().get('origin');
+//   const supabase = createServerClient();
+//   const { error } = await supabase.auth.signInWithOAuth({
+//     provider: 'google',
+//     options: {
+//       redirectTo: `${origin}${paths.authCallback}`,
+//     },
+//   });
+//   if (error) {
+//     throw new Error(error.message);
+//   }
+// };

@@ -16,20 +16,22 @@ import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { changePassword } from '../../authActions';
 
+const MAX_PASSWORD_LENGTH = 6;
+
 export const ChangePasswordForm = () => {
   const t = useTranslations('auth');
 
   const { execute, result, status, reset } = useAction(changePassword);
-
+  console.log(result, status);
   const schema = z
     .object({
-      password: z.string().min(3, {
-        message: 'Password must be at least 3 characters.',
+      password: z.string().min(MAX_PASSWORD_LENGTH, {
+        message: t('shared.validation.passwordLength', { count: MAX_PASSWORD_LENGTH }),
       }),
       passwordConfirmation: z.string(),
     })
     .refine((data) => data.password === data.passwordConfirmation, {
-      message: 'Passwords do not match.',
+      message: t('shared.validation.passwordNotMatch'),
       path: ['passwordConfirmation'],
     });
 
@@ -54,7 +56,7 @@ export const ChangePasswordForm = () => {
           <AlertDescription>{result.serverError}</AlertDescription>
         </Alert>
       )}
-      {result.data ? (
+      {!result.serverError && status === 'hasSucceeded' ? (
         <Alert variant="success">
           <AlertDescription>{t('change-password.success')}</AlertDescription>
         </Alert>

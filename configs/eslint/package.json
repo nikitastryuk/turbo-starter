@@ -20,9 +20,9 @@
     "root": true
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "eslint-config-next": "^14.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint-config-next": "^14.0.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-turbo": "^1.10.16",
     "eslint-plugin-prettier": "^5.0.1",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.44.7",
-    "eslint": "^8.53.0",
-    "typescript": "^5.2.2"
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2"
   }
 }

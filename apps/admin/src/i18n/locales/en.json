@@ -22,12 +22,13 @@
         "emailTaken": "The email address is already in use."
       }
     },
-    "sing-up": {
+    "sign-up": {
       "title": "Create an account",
       "googleButton": "Sign up with Google",
       "footerText": "Already have an account?",
       "footerLinkText": "Sign in",
-      "submit": "Sign up"
+      "submit": "Sign up",
+      "success": "Check your Inbox! We emailed an activation link to {email}."
     },
     "reset-password": {
       "title": "Reset password",
@@ -40,7 +41,7 @@
     "change-password": {
       "title": "Change password",
       "submit": "Change password",
-      "success": "our password has been updated, and you were automatically signed in.",
+      "success": "Your password has been updated and you were automatically signed in.",
       "footerText": "Go to",
       "footerLinkText": "Dashboard"
     }

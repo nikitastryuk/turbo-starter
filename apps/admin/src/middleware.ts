@@ -25,11 +25,17 @@ const withAuth = async (request: NextRequest, response: NextResponse) => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
   const { pathname } = request.nextUrl;
+
+  const isAuthCallbackPath: boolean = pathname === paths.authCallback;
   const isUnAuthenticatedPath: boolean = UNAUTHENTICATED_PATHS.some((path) =>
     pathname.includes(path),
   );
+  console.log(session);
+
+  if (isAuthCallbackPath) {
+    return enrichedResponse;
+  }
 
   // Redirect to home page if user is already authenticated
   if (session && isUnAuthenticatedPath) {
@@ -45,7 +51,6 @@ const withAuth = async (request: NextRequest, response: NextResponse) => {
 };
 
 export async function middleware(request: NextRequest) {
-  request.headers.append('x-url', request.nextUrl.pathname);
   const i18nRoutingResponse = with18nRouting(request);
   return await withAuth(request, i18nRoutingResponse);
 }
@@ -53,5 +58,5 @@ export async function middleware(request: NextRequest) {
 export const config = {
   // Skip all paths that should not be internationalized. This example skips
   // certain folders and all pathnames with a dot (e.g. favicon.ico)
-  matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!_next|api|_vercel|.*\\..*).*)'],
 };

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,15 +20,24 @@ import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { signInWithEmailAndPassword } from '../../authActions';
 
+const MAX_PASSWORD_LENGTH = 6;
+
+// TODO: Move to utils
+function getHashParameterValue(parameterName: string, url: string): string | null {
+  const params = new URLSearchParams(url.split(/[?#]/).slice(1).join('&'));
+  return params.get(parameterName) ?? null;
+}
+
 export const SignInForm = () => {
   const t = useTranslations('auth');
 
+  const [paramsError, setParamsError] = useState<string | null>(null);
   const { execute, result, status, reset } = useAction(signInWithEmailAndPassword);
 
   const schema = z.object({
     email: z.string().email(),
-    password: z.string().min(6, {
-      message: t('shared.validation.passwordLength', { count: 6 }),
+    password: z.string().min(MAX_PASSWORD_LENGTH, {
+      message: t('shared.validation.passwordLength', { count: MAX_PASSWORD_LENGTH }),
     }),
   });
 
@@ -44,14 +54,21 @@ export const SignInForm = () => {
     execute(data);
   };
 
+  useEffect(() => {
+    const error = getHashParameterValue('error_description', window.location.hash);
+    if (error) {
+      setParamsError(error);
+    }
+  }, []);
+
   return (
     <>
       <AuthFormTitle>{t('sing-in.title')}</AuthFormTitle>
       <AuthFormGoogleButton>{t('sing-in.googleButton')}</AuthFormGoogleButton>
       <p className="text-center text-xs text-gray-400">{t('shared.continueWithEmail')}</p>
-      {result.serverError && (
+      {(result.serverError ?? paramsError) && (
         <Alert variant="destructive">
-          <AlertDescription>{result.serverError}</AlertDescription>
+          <AlertDescription>{result.serverError ?? paramsError}</AlertDescription>
         </Alert>
       )}
       <FormProvider {...form}>
