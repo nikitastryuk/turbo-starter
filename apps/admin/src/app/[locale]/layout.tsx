@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation';
 
 import { NextIntlClientProvider } from 'next-intl';
 
+import { LanguageToggle } from '~/components/LanguageToggle';
+import { ThemeToggle } from '~/components/ThemeToggle';
 import { Providers } from '~/Providers';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -39,7 +41,13 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>{children}</Providers>
+          <Providers>
+            <div className="absolute right-3 top-3 flex items-center gap-3">
+              <ThemeToggle />
+              <LanguageToggle />
+            </div>
+            {children}
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

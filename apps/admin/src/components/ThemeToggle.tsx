@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 
+import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
 import { Button } from '@llmaid/system';
 
 export const ThemeToggle = () => {
   const { setTheme, theme } = useTheme();
-  const [_, startTransition] = useTransition();
 
   const [mounted, setMounted] = useState(false);
 
@@ -19,16 +19,17 @@ export const ThemeToggle = () => {
   if (!mounted) {
     return null;
   }
+
   return (
     <Button
-      size="icon"
       onClick={() => {
-        startTransition(() => {
-          setTheme(theme === 'light' ? 'dark' : 'light');
-        });
+        setTheme(theme === 'light' ? 'dark' : 'light');
       }}
+      variant="ghost"
+      className="transition-none"
+      size="icon"
     >
-      {!theme ? null : theme === 'dark' ? <p>Light</p> : <p>Dark</p>}
+      {theme === 'dark' ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
     </Button>
   );
 };

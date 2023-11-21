@@ -6,12 +6,13 @@ import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+import { Alert, AlertDescription, FormProvider } from '@llmaid/system';
 
 import configuration from '~/configuration';
 
 import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
+import { AuthFormSubmitButton } from '../../_components/AuthFormSubmitButton';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { resetPasswordForEmail } from '../../authActions';
 
@@ -53,9 +54,9 @@ export const ResetPasswordForm = () => {
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
               <AuthFormEmailField />
-              <Button disabled={status === 'executing'} className="block w-full" type="submit">
+              <AuthFormSubmitButton disabled={status === 'executing'}>
                 {t('reset-password.submit')}
-              </Button>
+              </AuthFormSubmitButton>
             </form>
           </FormProvider>
         </>

@@ -31,7 +31,6 @@ const withAuth = async (request: NextRequest, response: NextResponse) => {
   const isUnAuthenticatedPath: boolean = UNAUTHENTICATED_PATHS.some((path) =>
     pathname.includes(path),
   );
-  console.log(session);
 
   if (isAuthCallbackPath) {
     return enrichedResponse;

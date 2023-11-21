@@ -9,7 +9,7 @@ import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+import { Alert, AlertDescription, FormProvider } from '@llmaid/system';
 
 import configuration from '~/configuration';
 
@@ -17,6 +17,7 @@ import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormGoogleButton } from '../../_components/AuthFormGoogleButton';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
+import { AuthFormSubmitButton } from '../../_components/AuthFormSubmitButton';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { signInWithEmailAndPassword } from '../../authActions';
 
@@ -63,8 +64,8 @@ export const SignInForm = () => {
 
   return (
     <>
-      <AuthFormTitle>{t('sing-in.title')}</AuthFormTitle>
-      <AuthFormGoogleButton>{t('sing-in.googleButton')}</AuthFormGoogleButton>
+      <AuthFormTitle>{t('sign-in.title')}</AuthFormTitle>
+      <AuthFormGoogleButton>{t('sign-in.googleButton')}</AuthFormGoogleButton>
       <p className="text-center text-xs text-gray-400">{t('shared.continueWithEmail')}</p>
       {(result.serverError ?? paramsError) && (
         <Alert variant="destructive">
@@ -76,17 +77,17 @@ export const SignInForm = () => {
           <AuthFormEmailField />
           <AuthFormPasswordField />
           <Link href={configuration.paths.resetPassword} className="block text-sm hover:underline">
-            {t('sing-in.forgotPassword')}
+            {t('sign-in.forgotPassword')}
           </Link>
-          <Button disabled={status === 'executing'} className="block w-full" type="submit">
-            {t('sing-in.submit')}
-          </Button>
+          <AuthFormSubmitButton disabled={status === 'executing'}>
+            {t('sign-in.submit')}
+          </AuthFormSubmitButton>
         </form>
       </FormProvider>
       <AuthFormFooter
-        text={t('sing-in.footerText')}
+        text={t('sign-in.footerText')}
         linkHref={configuration.paths.signUp}
-        linkText={t('sing-in.footerLinkText')}
+        linkText={t('sign-in.footerLinkText')}
       />
     </>
   );

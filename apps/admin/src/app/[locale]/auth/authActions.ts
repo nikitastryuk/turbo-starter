@@ -45,7 +45,7 @@ export const signUpWithEmailAndPassword = action(
     const identities = data?.user?.identities ?? [];
     if (identities.length === 0) {
       const t = await getTranslations();
-      throw new Error(t('auth.sing-in.errors.emailTaken'));
+      throw new Error(t('auth.sign-in.errors.emailTaken'));
     }
   },
 );

@@ -11,7 +11,7 @@
         "passwordNotMatch": "Passwords do not match"
       }
     },
-    "sing-in": {
+    "sign-in": {
       "title": "Sign in to your account",
       "googleButton": "Sign in with Google",
       "forgotPassword": "Forgot password?",
@@ -45,6 +45,5 @@
       "footerText": "Go to",
       "footerLinkText": "Dashboard"
     }
-  },
-  "test": "{count, plural, one {# user} other {# users}}"
+  }
 }

@@ -26,7 +26,11 @@ export const AuthFormGoogleButton = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <Button onClick={handleGoogleSignIn} variant="outline" className="relative w-full">
+    <Button
+      onClick={handleGoogleSignIn}
+      variant="outline"
+      className="relative w-full transition-none"
+    >
       <Image
         className="absolute left-3"
         decoding="async"

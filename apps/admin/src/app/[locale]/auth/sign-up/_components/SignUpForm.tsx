@@ -7,7 +7,7 @@ import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+import { Alert, AlertDescription, FormProvider } from '@llmaid/system';
 
 import configuration from '~/configuration';
 
@@ -16,6 +16,7 @@ import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormGoogleButton } from '../../_components/AuthFormGoogleButton';
 import { AuthFormPasswordConfirmationField } from '../../_components/AuthFormPasswordConfirmationField';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
+import { AuthFormSubmitButton } from '../../_components/AuthFormSubmitButton';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { signUpWithEmailAndPassword } from '../../authActions';
 
@@ -79,9 +80,9 @@ export const SignUpForm = () => {
             <AuthFormEmailField />
             <AuthFormPasswordField />
             <AuthFormPasswordConfirmationField />
-            <Button disabled={status === 'executing'} className="block w-full" type="submit">
+            <AuthFormSubmitButton disabled={status === 'executing'}>
               {t('sign-up.submit')}
-            </Button>
+            </AuthFormSubmitButton>
           </form>
         </FormProvider>
       )}

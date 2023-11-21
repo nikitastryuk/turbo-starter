@@ -6,13 +6,14 @@ import { useAction } from 'next-safe-action/hook';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Alert, AlertDescription, Button, FormProvider } from '@llmaid/system';
+import { Alert, AlertDescription, FormProvider } from '@llmaid/system';
 
 import configuration from '~/configuration';
 
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormPasswordConfirmationField } from '../../_components/AuthFormPasswordConfirmationField';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
+import { AuthFormSubmitButton } from '../../_components/AuthFormSubmitButton';
 import { AuthFormTitle } from '../../_components/AuthFormTitle';
 import { changePassword } from '../../authActions';
 
@@ -22,7 +23,6 @@ export const ChangePasswordForm = () => {
   const t = useTranslations('auth');
 
   const { execute, result, status, reset } = useAction(changePassword);
-  console.log(result, status);
   const schema = z
     .object({
       password: z.string().min(MAX_PASSWORD_LENGTH, {
@@ -65,9 +65,9 @@ export const ChangePasswordForm = () => {
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <AuthFormPasswordField />
             <AuthFormPasswordConfirmationField />
-            <Button disabled={status === 'executing'} className="block w-full" type="submit">
+            <AuthFormSubmitButton disabled={status === 'executing'}>
               {t('change-password.submit')}
-            </Button>
+            </AuthFormSubmitButton>
           </form>
         </FormProvider>
       )}
