@@ -41,8 +41,10 @@ export const signUpWithEmailAndPassword = action(
     if (error) {
       throw new Error(error.message);
     }
+    console.log(data);
     // if no identities - it means that the email is already taken
     const identities = data?.user?.identities ?? [];
+    console.log(identities);
     if (identities.length === 0) {
       const t = await getTranslations();
       throw new Error(t('auth.sign-in.errors.emailTaken'));
@@ -107,17 +109,3 @@ export const changePassword = action(
     }
   },
 );
-
-// export const signInWithGoogle = async () => {
-//   const origin = headers().get('origin');
-//   const supabase = createServerClient();
-//   const { error } = await supabase.auth.signInWithOAuth({
-//     provider: 'google',
-//     options: {
-//       redirectTo: `${origin}${paths.authCallback}`,
-//     },
-//   });
-//   if (error) {
-//     throw new Error(error.message);
-//   }
-// };

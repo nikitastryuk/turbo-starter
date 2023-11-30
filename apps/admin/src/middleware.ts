@@ -17,6 +17,9 @@ const { paths } = configuration;
 // List of paths that do not require authentication and will be redirected to home page if user is already authenticated
 const UNAUTHENTICATED_PATHS = [paths.signIn, paths.signUp, paths.resetPassword];
 
+// https://github.com/supabase/supabase/issues/19088
+// https://github.com/supabase/gotrue/issues/1160
+// https://github.com/supabase/auth-helpers/issues/696
 const withAuth = async (request: NextRequest, response: NextResponse) => {
   const { supabase, response: enrichedResponse } = createMiddlewareClient(request, response);
 
