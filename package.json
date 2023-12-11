@@ -28,10 +28,10 @@
     "@llmaid/eslint-config": "*",
     "@llmaid/prettier-config": "*",
     "@llmaid/tsconfig": "*",
-    "lint-staged": "^15.1.0",
+    "lint-staged": "^15.2.0",
     "npm-check-updates": "^16.14.11",
     "simple-git-hooks": "^2.9.0",
-    "turbo": "^1.10.16"
+    "turbo": "^1.11.1"
   },
   "packageManager": "npm@9.8.1",
   "engines": {

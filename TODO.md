@@ -2,9 +2,9 @@
 
 #### Auth
 
-- [ ] Shared validations / schemas
-- [ ] Shared constants
-- [ ] Resolve todos
+- [ ] DRY validations / schemas
+- [ ] DRY constants
+- [ ] Check todos
 - [ ] Test Google Auth error handling
 - [ ] Link Google Auth to Email and password identity
 

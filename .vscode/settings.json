@@ -4,8 +4,8 @@
   "editor.scrollBeyondLastLine": false,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.addMissingImports": true
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports": "explicit"
   },
   "editor.formatOnSave": true,
   "editor.bracketPairColorization.enabled": true,
