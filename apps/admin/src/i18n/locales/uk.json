@@ -4,18 +4,17 @@
       "email": "Електронна адреса",
       "password": "Пароль",
       "passwordConfirmation": "Підтвердження пароля",
-      "continueWithEmail": "або з електронною адресою та паролем",
-
+      "continueWith": "або продовжити з",
       "validation": {
         "passwordLength": "Пароль повинен бути не менше {count} символів",
         "passwordNotMatch": "Паролі не співпадають"
       }
     },
     "sign-in": {
-      "title": "Увійти в свій обліковий запис",
+      "title": "Увійти в свій акаунт",
       "googleButton": "Увійти з Google",
       "forgotPassword": "Забули пароль?",
-      "footerText": "Немає облікового запису?",
+      "footerText": "Немає акаунту?",
       "footerLinkText": "Зареєструватися",
       "submit": "Увійти",
       "errors": {

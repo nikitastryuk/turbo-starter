@@ -29,12 +29,15 @@
     "@llmaid/prettier-config": "*",
     "@llmaid/tsconfig": "*",
     "lint-staged": "^15.2.0",
-    "npm-check-updates": "^16.14.11",
+    "npm-check-updates": "^16.14.12",
     "simple-git-hooks": "^2.9.0",
-    "turbo": "^1.11.1"
+    "turbo": "^1.11.2"
   },
   "packageManager": "npm@9.8.1",
   "engines": {
     "node": ">=v18.18.2"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "^8.11.2"
   }
 }

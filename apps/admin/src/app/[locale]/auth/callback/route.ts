@@ -8,7 +8,6 @@ export async function GET(request: Request) {
   // https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-sign-in-with-code-exchange
   const requestUrl = new URL(request.url);
   const searchParams = requestUrl.searchParams;
-
   const code = searchParams.get('code');
   const nextUrl = searchParams.get('next');
 

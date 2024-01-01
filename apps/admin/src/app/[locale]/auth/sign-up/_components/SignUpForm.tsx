@@ -1,6 +1,5 @@
 'use client';
 
-// import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useAction } from 'next-safe-action/hook';
@@ -12,6 +11,7 @@ import { Alert, AlertDescription, FormProvider } from '@llmaid/system';
 import configuration from '~/configuration';
 
 import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
+import { AuthFormContinueWith } from '../../_components/AuthFormContinueWith';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormGoogleButton } from '../../_components/AuthFormGoogleButton';
 import { AuthFormPasswordConfirmationField } from '../../_components/AuthFormPasswordConfirmationField';
@@ -60,7 +60,7 @@ export const SignUpForm = () => {
       {status !== 'hasSucceeded' && (
         <>
           <AuthFormGoogleButton>{t('sign-up.googleButton')}</AuthFormGoogleButton>
-          <p className="text-center text-xs text-gray-400">{t('shared.continueWithEmail')}</p>
+          <AuthFormContinueWith />
         </>
       )}
       {result.serverError && (

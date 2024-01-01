@@ -42,7 +42,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
-            <div className="absolute right-3 top-3 flex items-center gap-3">
+            <div className="fixed right-3 top-3 flex items-center gap-3">
               <ThemeToggle />
               <LanguageToggle />
             </div>

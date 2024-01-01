@@ -14,6 +14,7 @@ import { Alert, AlertDescription, FormProvider } from '@llmaid/system';
 import configuration from '~/configuration';
 
 import { AuthFormEmailField } from '../../_components/AuthFomEmailField';
+import { AuthFormContinueWith } from '../../_components/AuthFormContinueWith';
 import { AuthFormFooter } from '../../_components/AuthFormFooter';
 import { AuthFormGoogleButton } from '../../_components/AuthFormGoogleButton';
 import { AuthFormPasswordField } from '../../_components/AuthFormPasswordField';
@@ -66,7 +67,7 @@ export const SignInForm = () => {
     <>
       <AuthFormTitle>{t('sign-in.title')}</AuthFormTitle>
       <AuthFormGoogleButton>{t('sign-in.googleButton')}</AuthFormGoogleButton>
-      <p className="text-center text-xs text-gray-400">{t('shared.continueWithEmail')}</p>
+      <AuthFormContinueWith />
       {(result.serverError ?? paramsError) && (
         <Alert variant="destructive">
           <AlertDescription>{result.serverError ?? paramsError}</AlertDescription>

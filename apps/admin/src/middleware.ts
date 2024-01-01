@@ -29,8 +29,7 @@ const withAuth = async (request: NextRequest, response: NextResponse) => {
     data: { session },
   } = await supabase.auth.getSession();
   const { pathname } = request.nextUrl;
-
-  const isAuthCallbackPath: boolean = pathname === paths.authCallback;
+  const isAuthCallbackPath: boolean = pathname.includes(paths.authCallback);
   const isUnAuthenticatedPath: boolean = UNAUTHENTICATED_PATHS.some((path) =>
     pathname.includes(path),
   );

@@ -4,8 +4,7 @@
       "email": "Email address",
       "password": "Password",
       "passwordConfirmation": "Password confirmation",
-      "continueWithEmail": "or continue with email and password",
-
+      "continueWith": "or continue with",
       "validation": {
         "passwordLength": "Password must be at least {count} characters long",
         "passwordNotMatch": "Passwords do not match"
